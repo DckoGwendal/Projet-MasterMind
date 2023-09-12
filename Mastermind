@@ -8,7 +8,7 @@ Created on Fri Sep  8 15:10:26 2023
 from random import choice
 
 
-color = ['W','B','Y','G']
+color = ['R','G','Y','P','W']
 
 # Creating the color code
 def Code_Couleur(color_number, color):
@@ -22,17 +22,20 @@ def Code_Couleur(color_number, color):
 # Colour code search
 def Code_chercher(color_number):
     valid = 'N'
-    code_colors_tries = []
+    misplaced = 0
+    well_placed = 0
+    color_code_tries = []
     color_code = Code_Couleur(color_number, color)
     
     print(color_code)
     print("Les couleurs disponibles sont les suivantes :" , color )
     
+# validation of the color code chosen by the user    
     while valid == 'N':
         
         first_color = [input("\nDonner moi votre 1ere couleur :")]
         print(first_color)
-        while first_color not in [['W'],['B'],['Y'],['G']]:
+        while first_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
             print("Couleur inexistante. Veuillez réessayer")
             first_color = [input("\nDonner moi votre 1ere couleur :")]
             print(first_color)
@@ -40,7 +43,7 @@ def Code_chercher(color_number):
             
         second_color = [input("\nDonner moi votre 2eme couleur :")]
         print(second_color)
-        while second_color not in [['W'],['B'],['Y'],['G']]:
+        while second_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
             print("Couleur inexistante. Veuillez réessayer")
             second_color = [input("\nDonner moi votre 2eme couleur :")]
             print(second_color)
@@ -49,7 +52,7 @@ def Code_chercher(color_number):
             
         third_color = [input("\nDonner moi votre 3eme couleur :")]
         print(third_color)
-        while third_color not in [['W'],['B'],['Y'],['G']]:
+        while third_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
             print("Couleur inexistante. Veuillez réessayer")
             third_color = [input("\nDonner moi votre 3eme couleur :")]
             print(third_color)
@@ -57,14 +60,25 @@ def Code_chercher(color_number):
             
         fourth_color= [input("\nDonner moi votre 4eme couleur :")]
         print(fourth_color)
-        while fourth_color not in [['W'],['B'],['Y'],['G']]:
+        while fourth_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
             print("Couleur inexistante. Veuillez réessayer")
             fourth_color = [input("\nDonner moi votre 4eme couleur :")]
             print(fourth_color)
             
             
-        code_colors_tries = first_color + second_color + third_color + fourth_color
-            
+        color_code_tries = first_color + second_color + third_color + fourth_color
+        print("Votre code couleur est la suivant :", color_code_tries)
+        valid = input("Validez vous votre code_couleur? O ou N")
+        
+# Verification of the color code
+    for verification in range(color_number):
+        if color_code[verification] == color_code_tries[verification]:
+            well_placed += 1            
+        elif color_code[verification] in color_code_tries:
+            misplaced += 1
+        
+    print("Correct : ", well_placed, "|" , "Partiel : ", misplaced)
+       
         
 Code_chercher(4)
 
