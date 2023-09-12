@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep  8 15:10:26 2023
+
+@author: user
+"""
+
+from random import choice
+
+
+couleur = ['J','B','Y','G']
+
+
+def Code_Couleur(nombre_couleur, couleur):
+    code = []
+    for i in range(nombre_couleur):
+        code.append(choice(couleur))
+    
+    return code
+
