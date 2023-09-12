@@ -8,13 +8,64 @@ Created on Fri Sep  8 15:10:26 2023
 from random import choice
 
 
-couleur = ['J','B','Y','G']
+color = ['W','B','Y','G']
 
-
-def Code_Couleur(nombre_couleur, couleur):
+# Creating the color code
+def Code_Couleur(color_number, color):
     code = []
-    for i in range(nombre_couleur):
-        code.append(choice(couleur))
+    for i in range(color_number):
+        code.append(choice(color))
     
     return code
+
+
+# Colour code search
+def Code_chercher(color_number):
+    valid = 'N'
+    code_colors_tries = []
+    color_code = Code_Couleur(color_number, color)
+    
+    print(color_code)
+    print("Les couleurs disponibles sont les suivantes :" , color )
+    
+    while valid == 'N':
+        
+        first_color = [input("\nDonner moi votre 1ere couleur :")]
+        print(first_color)
+        while first_color not in [['W'],['B'],['Y'],['G']]:
+            print("Couleur inexistante. Veuillez réessayer")
+            first_color = [input("\nDonner moi votre 1ere couleur :")]
+            print(first_color)
+                            
+            
+        second_color = [input("\nDonner moi votre 2eme couleur :")]
+        print(second_color)
+        while second_color not in [['W'],['B'],['Y'],['G']]:
+            print("Couleur inexistante. Veuillez réessayer")
+            second_color = [input("\nDonner moi votre 2eme couleur :")]
+            print(second_color)
+    
+                
+            
+        third_color = [input("\nDonner moi votre 3eme couleur :")]
+        print(third_color)
+        while third_color not in [['W'],['B'],['Y'],['G']]:
+            print("Couleur inexistante. Veuillez réessayer")
+            third_color = [input("\nDonner moi votre 3eme couleur :")]
+            print(third_color)
+        
+            
+        fourth_color= [input("\nDonner moi votre 4eme couleur :")]
+        print(fourth_color)
+        while fourth_color not in [['W'],['B'],['Y'],['G']]:
+            print("Couleur inexistante. Veuillez réessayer")
+            fourth_color = [input("\nDonner moi votre 4eme couleur :")]
+            print(fourth_color)
+            
+            
+        code_colors_tries = first_color + second_color + third_color + fourth_color
+            
+        
+Code_chercher(4)
+
 
