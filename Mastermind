@@ -94,9 +94,9 @@ def Code_chercher(color_number,attemps):
             
             
         print("Correct : ", well_placed, "|" , "Partiel : ", misplaced)
-        
+# Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
         if well_placed == 4:
-            score = attemps - tries
+            score = tries
             print("\nVictoire !!", "Votre score est :", score)
         
         elif tries == attemps:
