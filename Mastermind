@@ -29,16 +29,24 @@ def Code_chercher(color_number,attemps):
     color_code_tries = []
     number_of_the_parties = 0
    
-    
+# Reinistialization of the score and the number of games   
     reset = input("Do you want to erase statistics? Y or N \t")
     if reset == "Y":
         folder_score = open(".SCORE.txt", "w")
         folder_score.write("0")
         folder_score.close
         
+        folder_part = open(".Nombre parties.txt", "w")
+        folder_part.write("0")
+        folder_part.close
+        
     folder_score = open(".SCORE.txt", "r")
     initial_score = folder_score.read()
     folder_score.close() 
+    
+    folder_part = open(".Nombre parties.txt", "r")
+    initial_part = folder_part.read()
+    folder_part.close() 
     
     
     
@@ -47,14 +55,16 @@ def Code_chercher(color_number,attemps):
     while replay == 'Y':
         
         
-# validation of the color code chosen by the user    
+# Validation of the color code chosen by the user    
         while   well_placed != 4 and tries != attemps:
             print("Votre score total est :", initial_score)
+            print("Le nombre de partie est :", initial_part)
             color_code = Code_Couleur(color_number, color)
             print(color_code)
             print("Les couleurs disponibles sont les suivantes :" , color )
             
             while valid == "N" :
+                number_of_the_parties += 1
                 tries += 1
                 first_color = [input("\nDonner moi votre 1ere couleur :")]
                 print(first_color)
@@ -103,16 +113,17 @@ def Code_chercher(color_number,attemps):
                     well_placed += 1
                     bien_places_indices.append(verifcation_well_placed)
                     
+                    
 # Stocke les indices des couleurs mal placées dans les deux listes en excluant les indices des couleurs bien placées    
             mal_places_indices_code_couleur = [i for i in range(color_number) if i not in bien_places_indices]
             mal_places_indices_code_clrs_essaie = [i for i in range(len(color_code_tries)) if i not in bien_places_indices]
+            
             
 #  On vérifie si les couleurs des indices mal placées sont dans les deux code couleurs si oui alors misplaced augmente       
             for verifcation_misplaced in mal_places_indices_code_couleur:
                 for j in mal_places_indices_code_clrs_essaie:
                     if color_code[verifcation_misplaced] in [color_code_tries[j]] :
                         misplaced += 1
-                
                 
             print("Correct : ", well_placed, "|" , "Partiel : ", misplaced, "\n")
             
@@ -122,9 +133,14 @@ def Code_chercher(color_number,attemps):
             print("\nVictoire !!", "Votre score est :", score)
             print("\n Le nombre de partie est", number_of_the_parties )
             
-            folder_score = open(".SCORE.txt", "wN")
+# The score is saved in the hidden file 
+            folder_score = open(".SCORE.txt", "w")
             folder_score.write(str(int(initial_score) + score))         
             folder_score.close()
+# The number of games is saved in the hidden file            
+            folder_part = open(".Nombre parties.txt", "w")
+            folder_part.write(str(int(initial_part) + number_of_the_parties))         
+            folder_part.close()
             
             tries = 0
             valid = "N"
