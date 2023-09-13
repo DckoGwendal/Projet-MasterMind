@@ -27,18 +27,33 @@ def Code_chercher(color_number,attemps):
     misplaced = 0
     well_placed = 0
     color_code_tries = []
+    number_of_the_parties = 0
    
     
+    reset = input("Do you want to erase statistics? Y or N \t")
+    if reset == "Y":
+        folder_score = open(".SCORE.txt", "w")
+        folder_score.write("0")
+        folder_score.close
+        
+    folder_score = open(".SCORE.txt", "r")
+    initial_score = folder_score.read()
+    folder_score.close() 
     
+    
+    
+        
     replay = input("Veux tu jouer ? Y = yes or N = no \t")
     while replay == 'Y':
         
         
-    # validation of the color code chosen by the user    
+# validation of the color code chosen by the user    
         while   well_placed != 4 and tries != attemps:
+            print("Votre score total est :", initial_score)
             color_code = Code_Couleur(color_number, color)
             print(color_code)
             print("Les couleurs disponibles sont les suivantes :" , color )
+            
             while valid == "N" :
                 tries += 1
                 first_color = [input("\nDonner moi votre 1ere couleur :")]
@@ -78,21 +93,21 @@ def Code_chercher(color_number,attemps):
                 print("Votre code couleur est la suivant :", color_code_tries)
                 valid = input("\nValidez vous votre code_couleur? O ou N")
             
-    # Verification of the color code
+# Verification of the color code
     
             bien_places_indices = []  # Pour éviter de compter les bien placés deux fois
             
-    # well_placed augmente si la couleur à l'indice i est dans les deux listes       
+# well_placed augmente si la couleur à l'indice i est dans les deux listes       
             for verifcation_well_placed in range(color_number):
                 if color_code[verifcation_well_placed] == color_code_tries[verifcation_well_placed]:
                     well_placed += 1
                     bien_places_indices.append(verifcation_well_placed)
                     
-    # Stocke les indices des couleurs mal placées dans les deux listes en excluant les indices des couleurs bien placées    
+# Stocke les indices des couleurs mal placées dans les deux listes en excluant les indices des couleurs bien placées    
             mal_places_indices_code_couleur = [i for i in range(color_number) if i not in bien_places_indices]
             mal_places_indices_code_clrs_essaie = [i for i in range(len(color_code_tries)) if i not in bien_places_indices]
             
-    #  On vérifie si les couleurs des indices mal placées sont dans les deux code couleurs si oui alors misplaced augmente       
+#  On vérifie si les couleurs des indices mal placées sont dans les deux code couleurs si oui alors misplaced augmente       
             for verifcation_misplaced in mal_places_indices_code_couleur:
                 for j in mal_places_indices_code_clrs_essaie:
                     if color_code[verifcation_misplaced] in [color_code_tries[j]] :
@@ -100,23 +115,32 @@ def Code_chercher(color_number,attemps):
                 
                 
             print("Correct : ", well_placed, "|" , "Partiel : ", misplaced, "\n")
-    # Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
-            if well_placed == 4:
-                score = tries
-                print("\nVictoire !!", "Votre score est :", score)
-                tries = 0
-                valid = "N"
-                well_placed,misplaced = 0,0
-                replay = input('Rejouer ?')
-            elif tries == attemps:
-                print("Perdu, tu as eu", tries , "tentatives")
-                tries = 0
-                valid = "N"
-                well_placed,misplaced = 0,0
-                replay = input('Rejouer ?')
-            else :
-                well_placed,misplaced = 0,0
-                valid = "N"
+            
+# Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
+        if well_placed == 4:
+            score = tries 
+            print("\nVictoire !!", "Votre score est :", score)
+            print("\n Le nombre de partie est", number_of_the_parties )
+            
+            folder_score = open(".SCORE.txt", "wN")
+            folder_score.write(str(int(initial_score) + score))         
+            folder_score.close()
+            
+            tries = 0
+            valid = "N"
+            well_placed,misplaced = 0,0
+            replay = input('Rejouer ?')
+            
+        elif tries == attemps:
+            print("Perdu, tu as eu", tries , "tentatives")
+            tries = 0
+            valid = "N"
+            well_placed,misplaced = 0,0
+            replay = input('Rejouer ?')
+            
+        else :
+            well_placed,misplaced = 0,0
+            valid = "N"
         
     
         
