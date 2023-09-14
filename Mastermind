@@ -19,22 +19,26 @@ def Code_Couleur(color_number, color):
     return code
 
 
+
+
 # Colour code search
 def Code_chercher(color_number,attemps):
-    score = 0
-    tries = 0
-    valid = 'N'
-    misplaced = 0
-    well_placed = 0
-    color_code_tries = []
-    number_of_the_parties = 0
-   
-   
-        
-    replay = input("Veux tu jouer ? Y = yes or N = no \t")
+
+    replay = input("Veux tu jouer ? Y or N \t").upper()
+    
     while replay == 'Y':
+# Variables
+        valid = "N"
+        tries = 0
+        score = 0
+        misplaced = 0
+        well_placed = 0
+        number_of_the_parties = 0
+        color_code_tries = []
+       
  # Reinistialization of the score and the number of games
-        reset = input("\nDo you want to erase statistics? Y or N \t")
+        reset = input("\nVoulez vous reinitialiser les satatistics ? Y or N \t").upper()
+        
         if reset == "Y":
             folder_score = open(".SCORE.txt", "w")
             folder_score.write("0")
@@ -52,14 +56,13 @@ def Code_chercher(color_number,attemps):
         initial_part = folder_part.read()
         folder_part.close()
         
-        tries = 0
-        valid = "N"
+
         print("\nVotre score total est :", initial_score)
         print("Le nombre de partie est :", initial_part)
         color_code = Code_Couleur(color_number, color)
         print("\n",color_code)
         print("Les couleurs disponibles sont les suivantes :" , color )
-        well_placed,misplaced = 0,0
+
         
 # Validation of the color code chosen by the user    
         while well_placed != 4 and tries != attemps:
@@ -68,41 +71,17 @@ def Code_chercher(color_number,attemps):
             while valid == "N" :
                 number_of_the_parties += 1
                 tries += 1
-                first_color = [input("\nDonner moi votre 1ere couleur :")]
-                print(first_color)
-                while first_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
-                    print("Couleur inexistante. Veuillez réessayer")
-                    first_color = [input("\nDonner moi votre 1ere couleur :")]
-                    print(first_color)
-                                    
+                for i in range(4):
+# f devant une chaine de caractere permet de remplacer le i de la chaine de caractere par sa valeur
+# upper() transforme en majuscule
+                    couleur = input(f"\nDonnez-moi votre {i+1}ère couleur : ").upper()
+                    while couleur not in color:
+                        print("Couleur inexistante. Veuillez réessayer.")
+                        couleur = input(f"\nDonnez-moi votre {i+1}ère couleur : ").upper()
+                    color_code_tries.append(couleur)
+
+                print("Vous avez choisi les couleurs :", color_code_tries)
                     
-                second_color = [input("\nDonner moi votre 2eme couleur :")]
-                print(second_color)
-                while second_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
-                    print("Couleur inexistante. Veuillez réessayer")
-                    second_color = [input("\nDonner moi votre 2eme couleur :")]
-                    print(second_color)
-            
-                        
-                    
-                third_color = [input("\nDonner moi votre 3eme couleur :")]
-                print(third_color)
-                while third_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
-                    print("Couleur inexistante. Veuillez réessayer")
-                    third_color = [input("\nDonner moi votre 3eme couleur :")]
-                    print(third_color)
-                
-                    
-                fourth_color= [input("\nDonner moi votre 4eme couleur :")]
-                print(fourth_color)
-                while fourth_color not in [['W'],['B'],['Y'],['G'],['P'],['R']]:
-                    print("Couleur inexistante. Veuillez réessayer")
-                    fourth_color = [input("\nDonner moi votre 4eme couleur :")]
-                    print(fourth_color)
-                    
-                    
-                color_code_tries = first_color + second_color + third_color + fourth_color
-                print("Votre code couleur est la suivant :", color_code_tries)
                 valid = input("\nValidez vous votre code_couleur? O ou N")
             
 # Verification of the color code
@@ -129,21 +108,20 @@ def Code_chercher(color_number,attemps):
                 
             print("Correct : ", well_placed, "|" , "Partiel : ", misplaced, "\n")
             
-    # Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
+# Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
             if well_placed == 4:
                 score = tries 
-    # The score is saved in the hidden file 
+# The score is saved in the hidden file 
                 folder_score = open(".SCORE.txt", "w")
                 folder_score.write(str(int(initial_score) + score))         
                 folder_score.close()
-    # The number of games is saved in the hidden file            
+# The number of games is saved in the hidden file            
                 folder_part = open(".Nombre parties.txt", "w")
                 folder_part.write(str(int(initial_part) + number_of_the_parties))         
                 folder_part.close()
                 print("\nVictoire !!", "Votre score est :", score)
-                print("\n Le nombre de partie est", number_of_the_parties )
+                print("Le nombre de partie est", number_of_the_parties )
                 
-   
                 
                 replay = input('Rejouer ?')
                 
