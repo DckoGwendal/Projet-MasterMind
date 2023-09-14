@@ -14,11 +14,8 @@ color = ['R','G','Y','P','W']
 def Code_Couleur(color_number, color):
     code = []
     for i in range(color_number):
-        code.append(choice(color))
-    
+        code.append(choice(color))  
     return code
-
-
 
 
 # Colour code search
@@ -71,9 +68,9 @@ def Code_chercher(color_number,attemps):
             while valid == "N" :
                 number_of_the_parties += 1
                 tries += 1
-                for i in range(4):
-# f devant une chaine de caractere permet de remplacer le i de la chaine de caractere par sa valeur
-# upper() transforme en majuscule
+                for i in range(color_number):
+# f in front of a character string allows to replace the i of the character string by its value
+# upper() changes to uppercase
                     couleur = input(f"\nDonnez-moi votre {i+1}ère couleur : ").upper()
                     while couleur not in color:
                         print("Couleur inexistante. Veuillez réessayer.")
@@ -86,21 +83,21 @@ def Code_chercher(color_number,attemps):
             
 # Verification of the color code
     
-            bien_places_indices = []  # Pour éviter de compter les bien placés deux fois
+            bien_places_indices = []  # To avoid counting the well-placed twice
             
-# well_placed augmente si la couleur à l'indice i est dans les deux listes       
+# well_placed increases if the color at index i is in both lists 
             for verifcation_well_placed in range(color_number):
                 if color_code[verifcation_well_placed] == color_code_tries[verifcation_well_placed]:
                     well_placed += 1
                     bien_places_indices.append(verifcation_well_placed)
                     
                     
-# Stocke les indices des couleurs mal placées dans les deux listes en excluant les indices des couleurs bien placées    
+# Stores misplaced color cues in both lists by excluding well placed color cues    
             mal_places_indices_code_couleur = [i for i in range(color_number) if i not in bien_places_indices]
             mal_places_indices_code_clrs_essaie = [i for i in range(len(color_code_tries)) if i not in bien_places_indices]
             
             
-#  On vérifie si les couleurs des indices mal placées sont dans les deux code couleurs si oui alors misplaced augmente       
+#  Check if the colors of misplaced clues are in both color code if yes then misplaced increases       
             for verifcation_misplaced in mal_places_indices_code_couleur:
                 for j in mal_places_indices_code_clrs_essaie:
                     if color_code[verifcation_misplaced] in [color_code_tries[j]] :
@@ -108,7 +105,9 @@ def Code_chercher(color_number,attemps):
                 
             print("Correct : ", well_placed, "|" , "Partiel : ", misplaced, "\n")
             
-# Score = 12-nombre de tentative n'est pas très parlant je pense qu'il est bien de choisir score = nombre de tentatives        
+            
+# Score = 12-number of attempts is not very telling I think it is good to choose score = number of attempts        
+            
             if well_placed == 4:
                 score = tries 
 # The score is saved in the hidden file 
