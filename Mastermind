@@ -6,17 +6,16 @@ Created on Fri Sep  8 15:10:26 2023
 """
 
 from random import choice
+from tkinter import *
 
-
-color = ['R','G','Y','P','W']
+colors = ['R','G','Y','P','W']
 
 # Creating the color code
-def Code_Couleur(color_number, color):
+def Code_Couleur(color_number, colors):
     code = []
     for i in range(color_number):
-        code.append(choice(color))  
+        code.append(choice(colors))  
     return code
-
 
 # Colour code search
 def Code_chercher(color_number,attemps):
@@ -56,9 +55,9 @@ def Code_chercher(color_number,attemps):
 
         print("\nVotre score total est :", initial_score)
         print("Le nombre de partie est :", initial_part)
-        color_code = Code_Couleur(color_number, color)
+        color_code = Code_Couleur(color_number, colors)
         print("\n",color_code)
-        print("Les couleurs disponibles sont les suivantes :" , color )
+        print("Les couleurs disponibles sont les suivantes :" , colors )
 
         
 # Validation of the color code chosen by the user    
@@ -72,7 +71,7 @@ def Code_chercher(color_number,attemps):
 # f in front of a character string allows to replace the i of the character string by its value
 # upper() changes to uppercase
                     couleur = input(f"\nDonnez-moi votre {i+1}ère couleur : ").upper()
-                    while couleur not in color:
+                    while couleur not in colors:
                         print("Couleur inexistante. Veuillez réessayer.")
                         couleur = input(f"\nDonnez-moi votre {i+1}ère couleur : ").upper()
                     color_code_tries.append(couleur)
@@ -133,8 +132,90 @@ def Code_chercher(color_number,attemps):
                 valid = "N"
             
     
+      
+      
+# PART GRAPH          
+      
         
-        
-Code_chercher(4,2)
+      
+
+# Function to check the code proposed by the player
+
+def cherche_code(proposed_code, actual_code):
+    well_placed = 0
+    misplaced = 0
+    
+    for i in range(len(actual_code)):
+        if proposed_code[i] == actual_code[i]:
+            well_placed += 1
+        elif proposed_code[i] in actual_code:
+            misplaced += 1
+    
+    return well_placed, misplaced
+
+# Function called when pressing the "Validate" button
+def valid():
+    proposed_code = [entry1.get(), entry2.get(), entry3.get(), entry4.get()]
+    tries += 1
+    for color in proposed_code:
+        if color in colors:
+            well_placed, misplaced = cherche_code(proposed_code, secret_code)
+            
+            if well_placed == 4:
+                result_label.config(text=f'Bravo ! Vous avez gagné en {tries} essais.')
+            else:
+                result_label.config(text=f'Essai {tries}: Corrects = {well_placed}, Mal placés = {misplaced}')
+        else:
+            result_label.config(text='Veuillez entrer des couleurs valides (R, G, Y, P, W).')
+
+def Lancement_Graphe():
+    global entry1
+    global entry2
+    global entry3
+    global entry4
+    global tries
+
+    # Initializing the window
+    root = Tk()
+    root.title('Mastermind')
+    
+    # Variable to count tests
+    tries = 0
+    
+    # Generate a secret code
+    secret_code = Code_Couleur(4,colors)
+    print(secret_code)
+    # Creation of entries for colors
+    entry1 = Entry(root, width=5)
+    entry2 = Entry(root, width=5)
+    entry3 = Entry(root, width=5)
+    entry4 = Entry(root, width=5)
+    
+    # Creation of the "Submit" button
+    submit_button = Button(root, text='Valider', command=valid)
+    
+    # Label creation to display results
+    result_label = Label(root, text='Entrez vos propositions.')
+    
+    # Placement of items in the window
+    entry1.grid(row=0, column=0)
+    entry2.grid(row=0, column=1)
+    entry3.grid(row=0, column=2)
+    entry4.grid(row=0, column=3)
+    submit_button.grid(row=1, columnspan=4)
+    result_label.grid(row=2, columnspan=4)
+    
+
+    
+    # Lancement de la boucle principale de la fenêtre
+    root.mainloop()
 
 
+
+
+graphe = input("Comment veux tu jouer? Graphe ou pas? Y ou N") .upper()
+if graphe == 'N':
+    Code_chercher(4, 3)
+elif graphe == 'Y':
+    Lancement_Graphe()
+    
