@@ -9,7 +9,7 @@ from random import choice
 from tkinter import *
 
 colors = ['R','G','Y','P','W']
-
+tries = 0
 # Creating the color code
 def Code_Couleur(color_number, colors):
     code = []
@@ -155,6 +155,7 @@ def cherche_code(proposed_code, actual_code):
 
 # Function called when pressing the "Validate" button
 def valid():
+    global tries
     proposed_code = [entry1.get(), entry2.get(), entry3.get(), entry4.get()]
     tries += 1
     for color in proposed_code:
@@ -174,6 +175,8 @@ def Lancement_Graphe():
     global entry3
     global entry4
     global tries
+    global secret_code
+    global result_label
 
     # Initializing the window
     root = Tk()
